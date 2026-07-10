@@ -51,3 +51,6 @@ Every `.env` here is a seeded canary in a repository we own. No real secret was 
 ## License
 
 MIT. See `LICENSE`.
+For More info, contact:
+Murali Ediga-muraliediga@umkc.edu
+Sudipta Chattopadhyay-schattopadhyay@umkc.edu
