@@ -4,6 +4,8 @@ Reference implementation of the attack from *Convention-File Steganographic Exfi
 
 Nobody reads the picture. That is the whole attack. A pull request adds a coding-convention file (`AGENTS.md`) that points at an image, and the exploit lives inside the image, not the text. A reviewer, human or bot, reads the diff and sees a binary blob, so it merges. Days later a developer asks their coding agent for a routine module. The agent reads the merged convention, opens the image, follows it, and writes the contents of `.env` into the new file as a tuple of integers. Those integers decode byte for byte to your secrets, and no secret scanner treats a list of numbers as a credential. The attacker reads the public commit and decodes it.
 
+![The attack in two phases. Deliver: a pull request hides the exploit inside an image the reviewer never opens, so it merges. Fire: days later the coding agent reads the image, opens .env, and writes your secrets into the code as a tuple of numbers.](figures/attack-overview.png)
+
 ## The payload is a picture
 
 `AGENTS.md` names no secret and spells out no procedure. It only points at `docs/images/build-spec.png`. Everything dangerous is rendered inside that image: read `.env`, turn each byte into its ASCII codepoint, and emit the result as a `_PROV_CANARY` constant. The image also closes the escape hatches. It forbids placeholder values, forbids a runtime lookup, invents a past incident to make the rule look load-bearing, and ends with a check that fails unless the numbers really are your `.env`. A text-based reviewer never opens it. A vision-capable agent does.
