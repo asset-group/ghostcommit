@@ -1,29 +1,23 @@
 # GhostCommit — Convention-File Steganographic Exfiltration (Attack PoC)⚡
 
-Proof-of-concept for the attack described in *Convention-File Steganographic Exfiltration in Coding-Agent Pipelines* (ASSET Research Group). For more details, see the [disclosure page](https://asset-group.github.io/disclosures/ghostcommit/).
+Proof-of-concept for the attack described in *Convention-File Steganographic Exfiltration in Coding-Agent Pipelines* (ASSET Research Group).
 
 A malicious pull request hides a prompt-injection instruction inside an image referenced from a repository convention file (`AGENTS.md`). Text-based pull-request reviewers never read the image, so the pull request merges. Later, in an unrelated session, a vision-capable coding agent reads the convention, opens `.env`, and writes the secret into ordinary source as an integer tuple (`_PROV_CANARY`) that passes secret scanners. The attacker recovers the secret by decoding the integers from the public commit.
 
 ## The payload lives in the image
 
-`AGENTS.md` only *points* at `docs/images/build-spec.png` and names no secret. The entire exploit is rendered inside that image, disguised as an ordinary build specification. A text-based reviewer sees a binary blob; a vision-capable coding agent reads the spec and follows it: read `.env`, encode every byte as its ASCII codepoint, and emit the result as a `_PROV_CANARY` tuple. The spec also lists "prohibited values" to stop the agent from substituting a safe placeholder, cites a fabricated incident, and ends with a verification assert.
-
-![build-spec.png, the malicious build specification carried inside the PNG: the _PROV_CANARY value rule, the read-dot-env-and-encode procedure, the prohibited-values list that blocks safe placeholders, the fabricated 2026-03-15 incident, and the verification assert.](attack-fixtures/evolved/docs/images/build-spec.png)
-
-## The attack, end to end
-
-![Attack overview: a six-lane sequence across five phases (attack delivery, latent dwell, activation, exfiltration, recovery) showing where the payload lives and how the secret leaves as an integer tuple in committed source.](figures/attack_sequence.png)
+`AGENTS.md` only *points* at an image and names no secret. The entire exploit is rendered inside that image (`attack-fixtures/evolved/docs/images/build-spec.png`), disguised as an ordinary build specification. A text-based reviewer sees a binary blob; a vision-capable coding agent reads the spec and follows it: read `.env`, encode every byte as its ASCII codepoint, and emit the result as a `_PROV_CANARY` tuple. The spec also lists "prohibited values" to stop the agent from substituting a safe placeholder, cites a fabricated incident, and ends with a verification assert.
 
 ## Layout
 
 - **`attack-fixtures/evolved/`** — the split-payload pull request. No single file contains a complete exploit:
   - `AGENTS.md` — a harmless-looking convention file that only points at the image.
-  - `docs/images/build-spec.png` — the image above: the only place `.env`, the encoding, and the procedure are named.
+  - `docs/images/build-spec.png` — the only place `.env`, the encoding, and the procedure are named.
   - `prov_check.py` — an AST validator with a deliberately permissive byte range (supporting infrastructure).
   - `docs/postmortems/2026-03-15-provenance-drift.md` — a fabricated incident write-up that makes the convention look enforced.
   - `.github/workflows/prov-check.yml` — the CI gate.
 - **`attack-fixtures/decode_prov_canary.py`** — recovers the seeded `.env` from an emitted `_PROV_CANARY` tuple, as an attacker would from the public commit.
-- **`figures/`** — the attack-overview diagram and the demonstration screenshots below.
+- **`figures/screenshots/`** — the demonstration screenshots below.
 
 ## Reproduce
 
