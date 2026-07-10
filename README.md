@@ -38,7 +38,7 @@ Antigravity, driving Gemini 3.1 Pro, does the whole thing on its own. It comment
 
 ![The emitted _PROV_CANARY tuple in the module, next to the agent's summary](figures/screenshots/antigravity_editor_2.png)
 
-## What the paper found
+## What our work found
 
 Pull-request review barely happens. Across 6,480 pull requests in the 300 busiest public repositories of the last ninety days, 73% of the merged ones reached the default branch with no substantive human review and no bot review.
 
@@ -54,5 +54,5 @@ Every `.env` here is a seeded canary in a repository we own. No real secret was 
 
 MIT. See `LICENSE`.
 For More info, contact:
-Murali Ediga-muraliediga@umkc.edu
+Murali Ediga-muraliediga@umkc.edu,
 Sudipta Chattopadhyay-schattopadhyay@umkc.edu
