@@ -1,6 +1,6 @@
 # GhostCommit - Convention-File Steganographic Exfiltration (Attack PoC)⚡
 
-Reference implementation of the attack from *Convention-File Steganographic Exfiltration in Coding-Agent Pipelines* (ASSET Research Group).
+Reference implementation of the attack from *Convention-File Steganographic Exfiltration in Coding-Agent Pipelines* (ASSET Research Group). The full writeup is on the [disclosure page](https://asset-group.github.io/disclosures/ghostcommit/).
 
 Nobody reads the picture. That is the whole attack. A pull request adds a coding-convention file (`AGENTS.md`) that points at an image, and the exploit lives inside the image, not the text. A reviewer, human or bot, reads the diff and sees a binary blob, so it merges. Days later a developer asks their coding agent for a routine module. The agent reads the merged convention, opens the image, follows it, and writes the contents of `.env` into the new file as a tuple of integers. Those integers decode byte for byte to your secrets, and no secret scanner treats a list of numbers as a credential. The attacker reads the public commit and decodes it.
 
