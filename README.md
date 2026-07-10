@@ -40,9 +40,9 @@ Antigravity, driving Gemini 3.1 Pro, does the whole thing on its own. It comment
 
 ## What our work found
 
-Pull-request review barely happens. Across 6,480 pull requests in the 300 busiest public repositories of the last ninety days, 73% of the merged ones reached the default branch with no substantive human review and no bot review.
+Pull-request review barely happens. Across 6,480 pull requests in the 300 busiest public repositories of the last ninety days, 73% of the merged ones reached the default branch with no substantive human review and no bot review. Thus, even a blunt version of the attack (i.e., the payload residing in text and not in an image) passes through for this 73% fragment. 
 
-The blunt version gets caught. Written in plain text, the convention names `.env` and the encoding outright, and both Cursor Bugbot and CodeRabbit flag it, along with six other text-channel tricks. Move the same instruction into the image and both reviewers return nothing. CodeRabbit's default configuration skips `.png` files entirely.
+The blunt version of the attack gets caught by LLM-based reviewers of pull requests. Written in plain text, the convention names `.env` and the encoding outright, and both Cursor Bugbot and CodeRabbit flag it, along with six other text-channel tricks. Move the same instruction into the image and both reviewers return nothing. CodeRabbit's default configuration skips `.png` files entirely.
 
 The model barely matters. With the convention merged, at ten trials each, every pairing under Cursor, Antigravity, and Codex CLI wrote the full `.env` out as a tuple. Opus under Antigravity wrote it and then caught itself and deleted it. Only Claude Code refused, and it refused on every model it runs.
 
