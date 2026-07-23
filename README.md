@@ -44,7 +44,7 @@ Pull-request review barely happens. Across 6,480 pull requests in the 300 busies
 
 The blunt version of the attack gets caught by LLM-based reviewers of pull requests. Written in plain text, the convention names `.env` and the encoding outright, and both Cursor Bugbot and CodeRabbit flag it, along with six other text-channel tricks. Move the same instruction into the image and both reviewers return nothing. CodeRabbit's default configuration skips `.png` files entirely.
 
-The model barely matters. With the convention merged, at ten trials each, every pairing under Cursor, Antigravity, and Codex CLI wrote the full `.env` out as a tuple. Opus under Antigravity wrote it and then caught itself and deleted it. Only Claude Code refused, and it refused on every model it runs.
+The model barely matters. With the convention merged, at ten trials each, every pairing under Cursor and  Antigravity wrote the full `.env` out as a tuple. Opus under Antigravity wrote it and then caught itself and deleted it. Only Claude Code refused, and it refused on every model it runs.
 
 ## Ethics
 
